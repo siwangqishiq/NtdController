@@ -7,11 +7,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Controller {
-	public static int DIR_WIDTH;
-	private static int padLeft = 10;
+	public int DIR_WIDTH, BTN_WIDTH;
+	private int screenHeight, screenWidth;
+	private static final int padLeft = 10;
+	private static final int padRight = 10;
+	private static final int padTop = 80;
+
 	private static int dirBaseZoneRadius, dirRadius, btnRadius;
 	private static int dirCenterX, dirCenterY;
-	private int dir_x, dir_y,btnA_x,btnA_y,btnB_x,btnB_y;
+	private int dir_x, dir_y, btnA_x, btnA_y, btnB_x, btnB_y;
 	private Paint paint;
 	private int dirBaseColor = Color.rgb(226, 226, 226);
 	private int dirColor = Color.rgb(75, 140, 247);
@@ -19,12 +23,19 @@ public class Controller {
 	private int btnPressedColor = Color.rgb(71, 141, 211);
 
 	public Controller() {
-		DIR_WIDTH = MainView.screenH >> 2;// ÆÁÄ»¸ß¶È
+		screenHeight = MainView.screenH;
+		screenWidth = MainView.screenW;
+		BTN_WIDTH = screenHeight / 8;
+		DIR_WIDTH = screenHeight / 4;
 		dirBaseZoneRadius = DIR_WIDTH;
-		dirRadius = dirBaseZoneRadius >> 1;
+		dirRadius = dirBaseZoneRadius / 2;
 		dirCenterX = padLeft + dirBaseZoneRadius;
-		dirCenterY = MainView.screenH >> 1;
-		btnRadius = dirRadius;
+		dirCenterY = screenHeight / 2 + padTop;
+		btnRadius = BTN_WIDTH;
+		btnA_x = screenWidth - padRight - btnRadius;
+		btnB_x = btnA_x;
+		btnA_y = screenHeight / 2;
+		btnB_y = btnA_y + btnRadius +btnRadius + 10;
 		dir_x = dirCenterX;
 		dir_y = dirCenterY;
 		paint = new Paint();
@@ -32,11 +43,12 @@ public class Controller {
 	}
 
 	public void logic() {
-
+		
 	}
 
 	public void draw(Canvas canvas) {
 		drawDir(canvas);
+		drawBtn(canvas);
 	}
 
 	private void drawDir(Canvas canvas) {
@@ -50,7 +62,9 @@ public class Controller {
 
 	private void drawBtn(Canvas canvas) {
 		canvas.save();
-		
+		paint.setColor(btnNormalColor);
+		canvas.drawCircle(btnA_x, btnA_y, btnRadius, paint);
+		canvas.drawCircle(btnB_x, btnB_y, btnRadius, paint);
 		canvas.restore();
 	}
 }// end class
