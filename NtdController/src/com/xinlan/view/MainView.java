@@ -44,14 +44,11 @@ public class MainView extends SurfaceView implements Callback, Runnable {
 		screenH = this.getHeight();
 		init();
 		flag = true;
-		// 实例线程
 		th = new Thread(this);
-		// 启动线程
 		th.start();
 	}
 
 	/**
-	 * 初始化
 	 */
 	public void init() {
 		GAME_STATE = 1;
@@ -99,12 +96,9 @@ public class MainView extends SurfaceView implements Callback, Runnable {
 		}// end while
 	}
 
-	/**
-	 * 监听触屏事件
-	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
+		mController.onTouch(event);
 		return true;
 	}
 
